@@ -1,3 +1,3 @@
-# EpicSevenDB apiserver
+# EpicSevenDB API (Work in Progress)
 
-Documentation available at  https://api.epicsevendb.com | https://epicsevendb-apiserver.herokuapp.com/
+Documentation for V1 available at  https://api.epicsevendb.com
