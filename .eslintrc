@@ -1,0 +1,17 @@
+{
+    "parser": "babel-eslint",
+    "plugins": [
+        "import",
+        "prettier"
+    ],
+    "env": {
+        "es6": true,
+        "node": true
+    },
+    "extends": [
+        "plugin:prettier/recommended"
+    ],
+    "rules": {
+        "prettier/prettier": "error"
+    }
+}

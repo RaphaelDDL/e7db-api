@@ -1,0 +1,35 @@
+openapi: 3.0.2
+info:
+  title: EpicSevenDB.com API
+  description: Documentation for the E7DB API. If questions arise, please open an [Issue on Github](https://github.com/EpicSevenDB/apiserver/issues).
+  version: 2.0.0
+servers:
+  - url: https://api.epicsevendb.com
+    description: Main (production) server
+  - url: http://localhost:8082
+    description: Local server
+#   - url: https://staging-api.example.com
+#     description: Optional server description, e.g. Internal staging server for testing
+paths:
+  /hero:
+    get:
+      summary: Returns a list of heroes.
+      description: Optional extended description in CommonMark or HTML.
+      responses:
+        '200':    # status code
+          description: 'A JSON array of suggested jobs and related info on the query'
+          content:
+            'application/json':
+              schema:
+                type: object
+                description: All the parameters returned from the search engine
+                results:
+                  result_string:
+                    type: string
+                    description: The phrase being searched for
+                example:
+                  result_string: 'lots of things!'
+  /artifact:
+    get:
+      summary: Returns a list of heroes.
+      description: Optional extended description in CommonMark or HTML.
