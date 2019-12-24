@@ -11,8 +11,7 @@ try {
 	let fileContents = fs.readFileSync(__dirname + '/swagger.yml', 'utf8');
 	swaggerDocument = yaml.safeLoad(fileContents);
 } catch (e) {
-    console.log(e);
-    // preset so
+	console.log(e);
 	swaggerDocument = {
 		openapi: '3.0.2',
 		info: {
@@ -23,11 +22,17 @@ try {
 		},
 	};
 }
+
 const connectionTimeout = timeout('15s');
 const router = express.Router();
+const swaggerOpts = {
+	swaggerOptions: {
+        defaultModelsExpandDepth: -1
+	},
+};
 
 router.use('/', connectionTimeout, swaggerUi.serve);
-router.get('*', connectionTimeout, swaggerUi.setup(swaggerDocument));
+router.get('*', connectionTimeout, swaggerUi.setup(swaggerDocument, swaggerOpts));
 
 export default (app) => {
 	app.use('/', Limiter);

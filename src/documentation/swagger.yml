@@ -1,35 +1,227 @@
 openapi: 3.0.2
 info:
-  title: EpicSevenDB.com API
-  description: Documentation for the E7DB API. If questions arise, please open an [Issue on Github](https://github.com/EpicSevenDB/apiserver/issues).
-  version: 2.0.0
+    title: EpicSevenDB.com API
+    description: Documentation for the [EpicSevenDB.com](https://epicsevendb.com) API. If questions arise, please open an [Issue on Github](https://github.com/EpicSevenDB/apiserver/issues).
+    version: 2.0.0
+    license:
+        name: CC-BY-NC-SA-4.0
+        url: https://github.com/EpicSevenDB/api/blob/master/LICENSE
+    termsOfService: https://epicsevendb.com/privacy-policy
+    contact:
+        name: Support & Issues => If questions arise, please open an Issue on Github
+        url: https://github.com/EpicSevenDB/api/issues
 servers:
-  - url: https://api.epicsevendb.com
-    description: Main (production) server
-  - url: http://localhost:8082
-    description: Local server
-#   - url: https://staging-api.example.com
-#     description: Optional server description, e.g. Internal staging server for testing
-paths:
-  /hero:
-    get:
-      summary: Returns a list of heroes.
-      description: Optional extended description in CommonMark or HTML.
-      responses:
-        '200':    # status code
-          description: 'A JSON array of suggested jobs and related info on the query'
-          content:
-            'application/json':
-              schema:
-                type: object
-                description: All the parameters returned from the search engine
-                results:
-                  result_string:
+    - url: http://localhost:8082
+      description: Local Server
+    - url: https://api.epicsevendb.com/
+      description: API (production) Server
+components:
+    examples:
+        ArtifactListItem:
+            _id: abyssal-crown
+            identifier: efm01
+            name: Abyssal Crown
+            rarity: 5
+            role: mage
+            assets:
+                icon: icon_art5_5
+                image: art5_5_fu
+                thumbnail: art5_5_l
+        HeroListItem:
+            _id: apocalypse-ravi
+            name: Apocalypse Ravi
+            rarity: 5
+            attribute: dark
+            role: warrior
+            zodiac: crab
+            devotion:
+                type: max_hp_rate
+        GeneralError:
+            error: 'Invalid request. Please read the API docs. Open an issue on Github if this keeps happening.'
+            stack: ''
+            meta:
+                $ref: '#/components/examples/ResponseMeta'
+        ResponseMeta:
+            requestDate: 'Tue Dec 24 17:31:07 UTC 2019'
+            apiVersion: '2.0.0'
+    schemas:
+        HeroList:
+            allOf:
+                - $ref: '#/components/schemas/ResponseMeta'
+                - type: object
+                  properties:
+                      results:
+                          type: array
+                          description: Returns zero or more of the requested endpoint
+                          items:
+                              $ref: '#/components/schemas/HeroListItem'
+        HeroListItem:
+            type: object
+            properties:
+                _id:
                     type: string
-                    description: The phrase being searched for
-                example:
-                  result_string: 'lots of things!'
-  /artifact:
-    get:
-      summary: Returns a list of heroes.
-      description: Optional extended description in CommonMark or HTML.
+                name:
+                    type: string
+                rarity:
+                    type: integer
+                attribute:
+                    type: string
+                role:
+                    type: string
+                zodiac:
+                    type: string
+                devotion:
+                    type: object
+                    properties:
+                        type:
+                            type: string
+            examples:
+                - $ref: '#/components/examples/HeroListItem'
+        ArtifactList:
+            allOf:
+                - $ref: '#/components/schemas/ResponseMeta'
+                - type: object
+                  properties:
+                      results:
+                          type: array
+                          description: Returns zero or more of the requested endpoint
+                          items:
+                              $ref: '#/components/schemas/ArtifactListItem'
+        ArtifactListItem:
+            type: object
+            properties:
+                _id:
+                    type: string
+                identifier:
+                    type: string
+                name:
+                    type: string
+                rarity:
+                    type: integer
+                role:
+                    type: string
+                assets:
+                    type: object
+                    properties:
+                        icon:
+                            type: string
+                        image:
+                            type: string
+                        thumbnail:
+                            type: string
+            examples:
+                - $ref: '#/components/examples/ArtifactListItem'
+        ResponseMeta:
+            type: object
+            properties:
+                meta:
+                    type: object
+                    description: Returns the api version and date of the current request
+                    properties:
+                        requestDate:
+                            type: string
+                        apiVersion:
+                            type: string
+            examples:
+                - $ref: '#/components/examples/ResponseMeta'
+        GeneralError:
+            allOf: # Combines the ResponseMeta and the inline model
+                - $ref: '#/components/schemas/ResponseMeta'
+                - type: object
+                  properties:
+                      error:
+                          type: string
+                      stack:
+                          type: string
+            examples:
+                - $ref: '#/components/examples/GeneralError'
+paths:
+    /status:
+        get:
+            summary: Is API Alive
+            description: Returns 200 if API server is up
+            responses:
+                200:
+                    description: OK
+    /hero/{id}:
+        get:
+            parameters:
+            - name: id
+              in: path
+              description: ID of the requested Hero. Use the `_id` field found on the Hero List
+              required: true
+              type: string
+            # - name: auth
+            #   in: header
+            #   description: an authorization header
+            #   required: true
+            #   type: string
+            summary: Hero Detail
+            description: Returns a list with a single Hero full data.
+            responses:
+                '418':
+                    description: I'm a Teapot (Error)
+                    content:
+                        'application/json':
+                            schema:
+                                $ref: '#/components/schemas/GeneralError'
+    /hero:
+        get:
+            summary: Heroes List
+            description: Returns a list of heroes with simplified data.
+            responses:
+                '418':
+                    description: I'm a Teapot (Error)
+                    content:
+                        'application/json':
+                            schema:
+                                $ref: '#/components/schemas/GeneralError'
+                '200':
+                    description: OK (Success)
+                    content:
+                        'application/json':
+                            schema:
+                                type: object
+                                description: Server Response
+                                $ref: '#/components/schemas/HeroList'
+    /artifact/{id}:
+        get:
+            parameters:
+            - name: id
+              in: path
+              description: ID of the requested Artifact. Use the `_id` field found on the Artifact List
+              required: true
+              type: string
+            # - name: auth
+            #   in: header
+            #   description: an authorization header
+            #   required: true
+            #   type: string
+            summary: Artifact Detail
+            description: Returns a list with a single Artifact full data.
+            responses:
+                '418':
+                    description: I'm a Teapot (Error)
+                    content:
+                        'application/json':
+                            schema:
+                                $ref: '#/components/schemas/GeneralError'
+    /artifact:
+        get:
+            summary: Artifacts List
+            description: Returns a list of artifacts with simplified data.
+            responses:
+                '418':
+                    description: I'm a Teapot (Error)
+                    content:
+                        'application/json':
+                            schema:
+                                $ref: '#/components/schemas/GeneralError'
+                '200':
+                    description: OK (Success)
+                    content:
+                        'application/json':
+                            schema:
+                                type: object
+                                description: Server Response
+                                $ref: '#/components/schemas/ArtifactList'

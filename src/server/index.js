@@ -37,7 +37,8 @@ export default class Server {
 		});
 
 		this.start = () => {
-			Database.connect()
+            // this.serverStart();
+            Database.connect()
 				.then(() => {
 					this.serverStart();
 				})
