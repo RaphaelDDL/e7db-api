@@ -11,10 +11,10 @@ info:
         name: Support & Issues => If questions arise, please open an Issue on Github
         url: https://github.com/EpicSevenDB/api/issues
 servers:
-    - url: http://localhost:8082
-      description: Local Server
     - url: https://api.epicsevendb.com/
       description: API (production) Server
+    - url: http://localhost:8082
+      description: Local Server
 components:
     examples:
         ArtifactListItem:
@@ -151,6 +151,10 @@ paths:
               description: ID of the requested Hero. Use the `_id` field found on the Hero List
               required: true
               type: string
+              examples:
+              - id: 'aramintha'
+              - id: 'blood-blade-karin'
+              - id: 'alexa'
             # - name: auth
             #   in: header
             #   description: an authorization header
@@ -192,6 +196,10 @@ paths:
               description: ID of the requested Artifact. Use the `_id` field found on the Artifact List
               required: true
               type: string
+              examples:
+              - id: 'idols-cheer'
+              - id: 'abyssal-crown'
+              - id: 'rosa-hargana'
             # - name: auth
             #   in: header
             #   description: an authorization header

@@ -17,7 +17,7 @@ try {
 	swaggerDocument = {
 		openapi: '3.0.2',
 		info: {
-			title: 'EpicSevenDB.com API',
+			title: 'EpicSevenDB.com API v' + VERSION,
 			description:
 				'Documentation for the E7DB API. If you are seeing this message instead of a proper endpoint documentation, it means Swagger failed to read the documentation file. Please open an [Issue on Github](https://github.com/EpicSevenDB/api/issues) so I can fix this.',
 			version: VERSION || '2.?.?',
