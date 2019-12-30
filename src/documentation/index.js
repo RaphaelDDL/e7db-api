@@ -4,11 +4,12 @@ import Limiter from '../utils/Limiter';
 import swaggerUi from 'swagger-ui-express';
 import fs from 'fs';
 import yaml from 'js-yaml';
+import path from 'path';
 
 let swaggerDocument;
 
 try {
-	let fileContents = fs.readFileSync(__dirname + '/swagger.yml', 'utf8');
+	let fileContents = fs.readFileSync(path.resolve(process.cwd() + 'docs/swagger.yml'), 'utf8');
 	swaggerDocument = yaml.safeLoad(fileContents);
 } catch (e) {
 	console.log(e);
@@ -27,7 +28,7 @@ const connectionTimeout = timeout('15s');
 const router = express.Router();
 const swaggerOpts = {
 	swaggerOptions: {
-        defaultModelsExpandDepth: -1
+		defaultModelsExpandDepth: -1,
 	},
 };
 
