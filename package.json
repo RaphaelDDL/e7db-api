@@ -2,7 +2,7 @@
   "name": "epicsevendb-apiserver",
   "description": "EpicSevenDB.com API Server",
   "author": "RaphaelDDL",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "homepage": "https://github.com/EpicSevenDB/apiserver#readme",
   "repository": {
     "type": "git",
