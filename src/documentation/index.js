@@ -20,7 +20,7 @@ try {
 			title: 'EpicSevenDB.com API',
 			description:
 				'Documentation for the E7DB API. If you are seeing this message instead of a proper endpoint documentation, it means Swagger failed to read the documentation file. Please open an [Issue on Github](https://github.com/EpicSevenDB/api/issues) so I can fix this.',
-			version: VERSION || '2.0.0',
+			version: VERSION || '2.?.?',
 		},
 	};
 }
