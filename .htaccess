@@ -1,0 +1,10 @@
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION BEGIN
+PassengerAppRoot "/home/raphaeld/public_html/epicsevendb/api"
+PassengerBaseURI "/"
+PassengerNodejs "/home/raphaeld/nodevenv/public_html/epicsevendb/api/12/bin/node"
+PassengerAppType node
+PassengerStartupFile dist/index.js
+PassengerAppLogFile "/home/raphaeld/logs/E7DB-API.log"
+# DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
+
+Options -Indexes
