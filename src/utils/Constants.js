@@ -1,5 +1,5 @@
 import path from 'path';
-const { version } = require(path.resolve(process.cwd(), 'package.json'));
+const { version } = require(path.resolve(process.cwd(), '/package.json'));
 export const VERSION = version;
 
 //* ------------------------
