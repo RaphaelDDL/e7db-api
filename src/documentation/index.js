@@ -9,7 +9,7 @@ import path from 'path';
 let swaggerDocument;
 
 try {
-	let fileContents = fs.readFileSync(path.resolve(process.cwd() + 'docs/swagger.yml'), 'utf8');
+	let fileContents = fs.readFileSync(path.resolve(process.cwd() + '/docs/swagger.yml'), 'utf8');
 	swaggerDocument = yaml.safeLoad(fileContents);
 } catch (e) {
 	console.log(e);
