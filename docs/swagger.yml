@@ -2,7 +2,7 @@ openapi: 3.0.2
 info:
     title: EpicSevenDB.com API
     description: Documentation for the [EpicSevenDB.com](https://epicsevendb.com) API. If questions arise, please open an [Issue on Github](https://github.com/EpicSevenDB/apiserver/issues).
-    version: 2.0.1
+    version: 2.0.777
     license:
         name: CC-BY-NC-SA-4.0
         url: https://github.com/EpicSevenDB/api/blob/master/LICENSE
