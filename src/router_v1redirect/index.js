@@ -24,7 +24,7 @@ router.get(
 		fetch('https://epicsevendb-apiserver.herokuapp.com/api' + requestUrlSplit[1])
 			.then((resp) => resp.json())
 			.then(async (json) => {
-                nodeTimer(TIME_START);
+				nodeTimer(TIME_START);
 
 				return res
 					.status(200)

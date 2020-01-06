@@ -37,9 +37,9 @@ export default class Server {
 		});
 
 		this.start = () => {
-            if( process?.env?.DB_CONNECT === 'false' ){
-                return this.serverStart();
-            }
+			if (process?.env?.DB_CONNECT === 'false') {
+				return this.serverStart();
+			}
 			Database.connect()
 				.then(() => {
 					this.serverStart();
