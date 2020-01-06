@@ -11,7 +11,7 @@ export default class Server {
 		const { Database } = options;
 
 		this.app = express();
-		this.port = process.env.PORT || 8082;
+		this.port = process.env.PORT || 8069;
 
 		this.app.use(device.capture());
 		this.app.use(bodyParser.json());
@@ -37,7 +37,9 @@ export default class Server {
 		});
 
 		this.start = () => {
-			// this.serverStart();
+            if( process?.env?.DB_CONNECT === 'false' ){
+                return this.serverStart();
+            }
 			Database.connect()
 				.then(() => {
 					this.serverStart();

@@ -25,10 +25,7 @@ class Database {
 	}
 
 	getCollection(collectionName) {
-		if (typeof this.db.collection !== 'function') {
-			return undefined;
-		}
-		return this.db.collection(collectionName);
+		return this?.db?.collection(collectionName);
 	}
 
 	connect() {

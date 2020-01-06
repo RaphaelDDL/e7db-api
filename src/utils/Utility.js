@@ -113,7 +113,7 @@ export function assignDefined(target, ...sources) {
 }
 
 export function nodeTimer(startedAt) {
-	if (process.env.NODE_ENV === 'production') {
+	if (process?.env?.NODE_ENV === 'production') {
 		return;
 	}
 	if (!startedAt) {

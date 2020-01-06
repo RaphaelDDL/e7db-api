@@ -33,7 +33,7 @@ const swaggerOpts = {
 };
 
 router.use('/', connectionTimeout, swaggerUi.serve);
-router.get('*', connectionTimeout, swaggerUi.setup(swaggerDocument, swaggerOpts));
+router.get('/', connectionTimeout, swaggerUi.setup(swaggerDocument, swaggerOpts));
 
 export default (app) => {
 	app.use('/', Limiter);
