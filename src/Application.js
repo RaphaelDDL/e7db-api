@@ -14,7 +14,7 @@ const { app } = server;
 // Server Error Handling
 //------------------------ */
 const serverShutdown = (exitCode = 1) => {
-	return Database?.client?.close(true, () => process.exit(exitCode)) ? '' : process.exit(exitCode);
+	return Database?.client?.close?.(true, () => process.exit(exitCode)) ?? process.exit(exitCode);
 };
 
 //catch for unhandledRejection so we close db conn and kill server
@@ -22,7 +22,7 @@ const serverShutdown = (exitCode = 1) => {
 process.on('unhandledRejection', (error) => {
 	cLog(
 		'error',
-		`| unhandledRejection: Please fix me -> ${error.message})
+		`| unhandledRejection: Please fix me -> ${error?.message})
 Killing the DB Connection and Node Server`
 	);
 	serverShutdown();
