@@ -13,7 +13,7 @@ info:
 servers:
     - url: https://api.epicsevendb.com/
       description: API (production) Server
-    - url: http://localhost:8082
+    - url: http://localhost:8069
       description: Local Server
 components:
     examples:
@@ -148,13 +148,10 @@ paths:
             parameters:
             - name: id
               in: path
-              description: ID of the requested Hero. Use the `_id` field found on the Hero List
+              description: ID of the requested Hero. Use the `_id` field found on the Hero List. Example => `aramintha`
               required: true
               type: string
-              examples:
-              - id: 'aramintha'
-              - id: 'blood-blade-karin'
-              - id: 'alexa'
+              example: 'aramintha'
             # - name: auth
             #   in: header
             #   description: an authorization header
@@ -193,13 +190,10 @@ paths:
             parameters:
             - name: id
               in: path
-              description: ID of the requested Artifact. Use the `_id` field found on the Artifact List
+              description: ID of the requested Artifact. Use the `_id` field found on the Artifact List. Example => `abyssal-crown`
               required: true
               type: string
-              examples:
-              - id: 'idols-cheer'
-              - id: 'abyssal-crown'
-              - id: 'rosa-hargana'
+              example: 'abyssal-crown'
             # - name: auth
             #   in: header
             #   description: an authorization header
