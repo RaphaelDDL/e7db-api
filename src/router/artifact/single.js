@@ -20,12 +20,7 @@ export default asyncRoute(async (req, res, next) => {
 			throw new Error('!collection || !requestedLanguage || !_id');
 		}
 
-		const artifactDetail = await collection
-			.aggregate([
-				{ $match: { _id } },
-				{ $limit: 1 },
-			])
-			.toArray();
+		const artifactDetail = await collection.aggregate([{ $match: { _id } }, { $limit: 1 }]).toArray();
 
 		if (artifactDetail && artifactDetail.length) {
 			nodeTimer(TIME_START);

@@ -30,42 +30,45 @@ export default asyncRoute(async (req, res, next) => {
 				// 		foreignField: '_id',
 				// 		// as: 'name',
 				// 	},
-                // },
+				// },
 
-                // adding ex_equip data if available
+				// adding ex_equip data if available
 				{
 					$lookup: {
 						from: `ex_equip_${requestedLanguage}`,
-                        let: { charId: '$id' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $cond: [{ $eq: [{ $unit: '$$charId' }, 'missing'] }, {}, { $in: ['$id', '$$charId'] }],
-                                    },
-                                },
-                            },
-                        ],
-					},
-                },
-
-                // converting buff/debuff/other into their data
-				{
-					$lookup: {
-						from: `buff_${requestedLanguage}`,
-                        let: { ar: '$skills.buff' },
-                        pipeline: [
-                            {
-                                $match: {
-                                    $expr: {
-                                        $cond: [{ $eq: [{ $type: '$$ar' }, 'missing'] }, {}, { $in: ['$_id', '$$ar'] }],
-                                    },
-                                },
-                            },
-                        ],
+						let: { charId: '$id' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$cond: [
+											{ $eq: [{ $unit: '$$charId' }, 'missing'] },
+											{},
+											{ $in: ['$id', '$$charId'] },
+										],
+									},
+								},
+							},
+						],
 					},
 				},
 
+				// converting buff/debuff/other into their data
+				{
+					$lookup: {
+						from: `buff_${requestedLanguage}`,
+						let: { ar: '$skills.buff' },
+						pipeline: [
+							{
+								$match: {
+									$expr: {
+										$cond: [{ $eq: [{ $type: '$$ar' }, 'missing'] }, {}, { $in: ['$_id', '$$ar'] }],
+									},
+								},
+							},
+						],
+					},
+				},
 			])
 			.toArray();
 
