@@ -1,15 +1,15 @@
 {
-  "name": "epicsevendb-apiserver",
+  "name": "epicsevendb-api",
   "description": "EpicSevenDB.com API Server",
   "author": "RaphaelDDL",
-  "version": "2.0.1",
-  "homepage": "https://github.com/EpicSevenDB/apiserver#readme",
+  "version": "2.1.0",
+  "homepage": "https://github.com/EpicSevenDB/api#readme",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/EpicSevenDB/apiserver.git"
+    "url": "git+https://github.com/EpicSevenDB/api.git"
   },
   "bugs": {
-    "url": "https://github.com/EpicSevenDB/apiserver/issues"
+    "url": "https://github.com/EpicSevenDB/api/issues"
   },
   "license": "CC-BY-NC-SA-4.0",
   "main": "dist/index.js",
