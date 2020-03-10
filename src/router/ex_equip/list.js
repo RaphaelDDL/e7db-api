@@ -13,30 +13,37 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const collection = Database.getCollection(`hero_${requestedLanguage}`);
+		const collection = Database.getCollection(`ex_equip_${requestedLanguage}`);
 
 		if (!collection || !requestedLanguage) {
 			throw new Error('!collection || !requestedLanguage');
 		}
 
-		const heroList = await collection
+		const exEquipList = await collection
 			.aggregate([
+				{
+					$lookup: {
+						from: `hero_${requestedLanguage}`,
+						localField: 'unit',
+						foreignField: 'id',
+						as: 'unit',
+					},
+				},
 				{
 					$project: {
 						_id: 1,
 						name: 1,
-						moonlight: 1,
-						rarity: 1,
-						attribute: 1,
 						role: 1,
-						zodiac: 1,
-						devotion: { type: 1 },
-						self_devotion: { type: 1 },
-						skills: {
-							buff: 1,
-							debuff: 1,
-							other: 1,
+						unit: {
+							_id: 1,
+							id: 1,
+							name: 1,
+							rarity: 1,
+							attribute: 1,
+							role: 1,
+							zodiac: 1,
 						},
+						icon: 1,
 					},
 				},
 			])
@@ -46,9 +53,9 @@ export default asyncRoute(async (req, res, next) => {
 			})
 			.toArray();
 
-		if (heroList && heroList.length) {
+		if (exEquipList && exEquipList.length) {
 			nodeTimer(TIME_START);
-			return mountApiResponse({}, res, null, heroList);
+			return mountApiResponse({}, res, null, exEquipList);
 		}
 		return mountApiErrorResponse(res, MESSAGES.query.invalid);
 	} catch (error) {

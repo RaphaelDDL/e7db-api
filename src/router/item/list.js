@@ -13,8 +13,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const translationCollection = `text_${requestedLanguage}`;
-		const collection = Database.getCollection('item', 2);
+		const collection = Database.getCollection(`materials_${requestedLanguage}`);
 
 		if (!collection || !requestedLanguage) {
 			throw new Error('!collection || !requestedLanguage');
@@ -28,65 +27,9 @@ export default asyncRoute(async (req, res, next) => {
 						support_count: 0,
 					},
 				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'name',
-						foreignField: '_id',
-						as: 'name',
-					},
-				},
-				{
-					$unwind: {
-						path: '$name',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$addFields: {
-						name: '$name.text',
-					},
-				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'description',
-						foreignField: '_id',
-						as: 'description',
-					},
-				},
-				{
-					$unwind: {
-						path: '$description',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$addFields: {
-						description: '$description.text',
-					},
-				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'category',
-						foreignField: '_id',
-						as: 'category',
-					},
-				},
-				{
-					$unwind: {
-						path: '$category',
-						preserveNullAndEmptyArrays: true,
-					},
-				},
-				{
-					$addFields: {
-						category: '$category.text',
-					},
-				},
 			])
 			.sort({
+				name: 1,
 				type1: 1,
 				type2: 1,
 			})

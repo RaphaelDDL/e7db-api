@@ -13,58 +13,26 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const translationCollection = `text_${requestedLanguage}`;
-		const collection = Database.getCollection('rankings', 2);
+		const collection = Database.getCollection('rankings');
 
 		if (!collection || !requestedLanguage) {
-			return mountApiErrorResponse(res, MESSAGES.db.dbConnectionQuery);
+			throw new Error('!collection || !requestedLanguage');
 		}
 
 		const rankList = await collection
 			.aggregate([
 				{
 					$lookup: {
-						from: 'hero',
+						from: `hero_${requestedLanguage}`,
 						localField: 'units.character_number',
 						foreignField: 'id',
 						as: 'team',
 					},
 				},
 				{
-					$unwind: '$team',
-				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'team.name',
-						foreignField: '_id',
-						as: 'team.name',
-					},
-				},
-				{
-					$unwind: '$team.name',
-				},
-				{
-					$addFields: {
-						team: {
-							name: '$team.name.text',
-						},
-					},
-				},
-				{
-					$group: {
-						_id: '$_id',
-						player: { $first: '$player' },
-						league: { $first: '$league' },
-						rank: { $first: '$rank' },
-						border: { $first: '$border' },
-						team: { $push: '$team' },
-					},
-				},
-				{
 					$project: {
-						_id: 1,
 						player: 1,
+						score: 1,
 						league: 1,
 						rank: 1,
 						border: 1,

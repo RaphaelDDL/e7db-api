@@ -8,6 +8,8 @@ import heroList from './hero/list';
 import heroDetail from './hero/single';
 import itemList from './item/list';
 import itemDetail from './item/single';
+import exEquipList from './ex_equip/list';
+import exEquipDetail from './ex_equip/single';
 import arenaRanking from './ranking';
 
 const connectionTimeout = timeout('15s');
@@ -19,6 +21,8 @@ router.get('/hero/:_id', connectionTimeout, heroDetail);
 router.get('/hero', connectionTimeout, heroList);
 router.get('/item/:_id', connectionTimeout, itemDetail);
 router.get('/item', connectionTimeout, itemList);
+router.get('/ex_equip/:_id', connectionTimeout, exEquipDetail);
+router.get('/ex_equip', connectionTimeout, exEquipList);
 
 router.get('/ranking', connectionTimeout, arenaRanking);
 

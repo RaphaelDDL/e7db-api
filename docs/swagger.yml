@@ -111,6 +111,42 @@ components:
                             type: string
             examples:
                 - $ref: '#/components/examples/ArtifactListItem'
+        ExEquipList:
+            allOf:
+                - $ref: '#/components/schemas/ResponseMeta'
+                - type: object
+                  properties:
+                      results:
+                          type: array
+                          description: Returns zero or more of the requested endpoint
+                          items:
+                              $ref: '#/components/schemas/ExEquipListItem'
+        ExEquipListItem:
+            type: object
+            properties:
+                _id:
+                    type: string
+                id:
+                    type: string
+                name:
+                    type: string
+                rarity:
+                    type: integer
+                role:
+                    type: string
+                icon:
+                    type: string
+                unit:
+                    type: object
+                    # properties:
+                    #     icon:
+                    #         type: string
+                    #     image:
+                    #         type: string
+                    #     thumbnail:
+                    #         type: string
+            # examples:
+            #     - $ref: '#/components/examples/ArtifactListItem'
         ResponseMeta:
             type: object
             properties:
@@ -227,3 +263,45 @@ paths:
                                 type: object
                                 description: Server Response
                                 $ref: '#/components/schemas/ArtifactList'
+    /ex_equip/{id}:
+        get:
+            parameters:
+            - name: id
+              in: path
+              description: ID of the requested Exclusive Equipment. Use the `_id` field found on the Exclusive Equipment List. Example => `exc100301`
+              required: true
+              type: string
+              example: 'exc100301'
+            # - name: auth
+            #   in: header
+            #   description: an authorization header
+            #   required: true
+            #   type: string
+            summary: Exclusive Equipment Detail
+            description: Returns a list with a single Exclusive Equipment full data.
+            responses:
+                '418':
+                    description: I'm a Teapot (Error)
+                    content:
+                        'application/json':
+                            schema:
+                                $ref: '#/components/schemas/GeneralError'
+    /ex_equip:
+        get:
+            summary: Exclusive Equipment List
+            description: Returns a list of Exclusive Equipment with simplified data.
+            responses:
+                '418':
+                    description: I'm a Teapot (Error)
+                    content:
+                        'application/json':
+                            schema:
+                                $ref: '#/components/schemas/GeneralError'
+                '200':
+                    description: OK (Success)
+                    content:
+                        'application/json':
+                            schema:
+                                type: object
+                                description: Server Response
+                                $ref: '#/components/schemas/ExEquipList'

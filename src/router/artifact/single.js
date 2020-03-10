@@ -14,8 +14,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const translationCollection = `text_${requestedLanguage}`;
-		const collection = Database.getCollection('artifact', 2);
+		const collection = Database.getCollection(`artifact_${requestedLanguage}`);
 
 		if (!collection || !requestedLanguage || !_id) {
 			throw new Error('!collection || !requestedLanguage || !_id');
@@ -25,54 +24,6 @@ export default asyncRoute(async (req, res, next) => {
 			.aggregate([
 				{ $match: { _id } },
 				{ $limit: 1 },
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'name',
-						foreignField: '_id',
-						as: 'name',
-					},
-				},
-				{
-					$unwind: { path: '$name', preserveNullAndEmptyArrays: true },
-				},
-				{
-					$addFields: {
-						name: '$name.text',
-					},
-				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'description',
-						foreignField: '_id',
-						as: 'description',
-					},
-				},
-				{
-					$unwind: { path: '$description', preserveNullAndEmptyArrays: true },
-				},
-				{
-					$addFields: {
-						description: '$description.text',
-					},
-				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'skill.description',
-						foreignField: '_id',
-						as: 'skill.description',
-					},
-				},
-				{
-					$unwind: { path: '$skill.description', preserveNullAndEmptyArrays: true },
-				},
-				{
-					$addFields: {
-						skill: { description: '$skill.description.text' },
-					},
-				},
 			])
 			.toArray();
 

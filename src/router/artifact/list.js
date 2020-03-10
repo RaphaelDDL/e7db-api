@@ -13,8 +13,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const translationCollection = `text_${requestedLanguage}`;
-		const collection = Database.getCollection('artifact', 2);
+		const collection = Database.getCollection(`artifact_${requestedLanguage}`);
 
 		if (!collection || !requestedLanguage) {
 			throw new Error('!collection || !requestedLanguage');
@@ -24,22 +23,6 @@ export default asyncRoute(async (req, res, next) => {
 			.aggregate([
 				{
 					$project: { _id: 1, identifier: 1, name: 1, rarity: 1, role: 1, assets: 1 },
-				},
-				{
-					$lookup: {
-						from: translationCollection,
-						localField: 'name',
-						foreignField: '_id',
-						as: 'name',
-					},
-				},
-				{
-					$unwind: { path: '$name', preserveNullAndEmptyArrays: true },
-				},
-				{
-					$addFields: {
-						name: '$name.text',
-					},
 				},
 			])
 			.sort({
