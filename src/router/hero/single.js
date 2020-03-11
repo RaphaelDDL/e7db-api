@@ -23,14 +23,16 @@ export default asyncRoute(async (req, res, next) => {
 		const heroDetail = await collection
 			.aggregate([
 				{ $match: { _id } },
-				{
-					$lookup: {
-						from: `buff-${requestedLanguage}`,
-						localField: 'skills.buff',
-						foreignField: '_id',
-						as: 'skills.buffs',
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: `buff-${requestedLanguage}`,
+				// 		localField: 'skills.buff',
+				// 		foreignField: '_id',
+				// 		as: {
+				//             skills: 'buffs'
+				//         }
+				// 	},
+				// },
 
 				// adding ex_equip data if available
 				// {
