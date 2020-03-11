@@ -32,9 +32,9 @@ export default asyncRoute(async (req, res, next) => {
 						zodiac: 1,
 						devotion: { type: 1 },
 						self_devotion: { type: 1 },
-                        buff: 1,
-                        debuff: 1,
-                        common: 1,
+						buff: 1,
+						debuff: 1,
+						common: 1,
 					},
 				},
 			])
