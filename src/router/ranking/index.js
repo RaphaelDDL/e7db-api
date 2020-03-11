@@ -23,7 +23,7 @@ export default asyncRoute(async (req, res, next) => {
 			.aggregate([
 				{
 					$lookup: {
-						from: `hero_${requestedLanguage}`,
+						from: `hero-${requestedLanguage}`,
 						localField: 'units.character_number',
 						foreignField: 'id',
 						as: 'team',

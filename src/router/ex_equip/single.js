@@ -14,7 +14,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const collection = Database.getCollection(`ex_equip_${requestedLanguage}`);
+		const collection = Database.getCollection('ex_equip', requestedLanguage);
 
 		if (!collection || !requestedLanguage || !_id) {
 			throw new Error('!collection || !requestedLanguage || !_id');
@@ -25,7 +25,7 @@ export default asyncRoute(async (req, res, next) => {
 				{ $match: { _id } },
 				{
 					$lookup: {
-						from: `hero_${requestedLanguage}`,
+						from: `hero-${requestedLanguage}`,
 						localField: 'unit',
 						foreignField: 'id',
 						as: 'unit',

@@ -13,7 +13,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const collection = Database.getCollection(`hero_${requestedLanguage}`);
+		const collection = Database.getCollection('hero', requestedLanguage);
 
 		if (!collection || !requestedLanguage) {
 			throw new Error('!collection || !requestedLanguage');
@@ -32,11 +32,9 @@ export default asyncRoute(async (req, res, next) => {
 						zodiac: 1,
 						devotion: { type: 1 },
 						self_devotion: { type: 1 },
-						skills: {
-							buff: 1,
-							debuff: 1,
-							other: 1,
-						},
+                        buff: 1,
+                        debuff: 1,
+                        common: 1,
 					},
 				},
 			])

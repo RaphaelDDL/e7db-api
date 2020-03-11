@@ -24,8 +24,8 @@ class Database {
 		return (this.mongoClientDb = db);
 	}
 
-	getCollection(collectionName) {
-		return this?.db?.collection(collectionName);
+	getCollection(collectionName, lang) {
+		return this?.db?.collection(lang ? `${collectionName}-${lang}` : collectionName);
 	}
 
 	connect() {

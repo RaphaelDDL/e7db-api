@@ -14,7 +14,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const collection = Database.getCollection(`hero_${requestedLanguage}`);
+		const collection = Database.getCollection('hero', requestedLanguage);
 
 		if (!collection || !requestedLanguage || !_id) {
 			throw new Error('!collection || !requestedLanguage || !_id');
@@ -35,7 +35,7 @@ export default asyncRoute(async (req, res, next) => {
 				// adding ex_equip data if available
 				{
 					$lookup: {
-						from: `ex_equip_${requestedLanguage}`,
+						from: `ex_equip-${requestedLanguage}`,
 						let: { charId: '$id' },
 						pipeline: [
 							{
@@ -56,7 +56,7 @@ export default asyncRoute(async (req, res, next) => {
 				// converting buff/debuff/other into their data
 				{
 					$lookup: {
-						from: `buff_${requestedLanguage}`,
+						from: `buff-${requestedLanguage}`,
 						let: { ar: '$skills.buff' },
 						pipeline: [
 							{

@@ -14,7 +14,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const collection = Database.getCollection(`materials_${requestedLanguage}`);
+		const collection = Database.getCollection('materials', requestedLanguage);
 
 		if (!collection || !requestedLanguage || !_id) {
 			throw new Error('!collection || !requestedLanguage || !_id');

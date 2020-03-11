@@ -13,7 +13,7 @@ export default asyncRoute(async (req, res, next) => {
 
 	try {
 		const requestedLanguage = getCurrentLanguage(req);
-		const collection = Database.getCollection(`artifact_${requestedLanguage}`);
+		const collection = Database.getCollection('artifact', requestedLanguage);
 
 		if (!collection || !requestedLanguage) {
 			throw new Error('!collection || !requestedLanguage');
