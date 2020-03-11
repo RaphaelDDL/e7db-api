@@ -30,6 +30,13 @@ export default asyncRoute(async (req, res, next) => {
 					},
 				},
 				{
+					$addFields: {
+						unit: {
+							$arrayElemAt: ['$unit', 0],
+						},
+					},
+				},
+				{
 					$project: {
 						_id: 1,
 						name: 1,
