@@ -63,10 +63,5 @@
     "prettier-eslint-cli": "^5.0.0",
     "pretty-quick": "^2.0.1"
   },
-  "heroku-run-build-script": true,
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run codestandard && git add"
-    }
-  }
+  "heroku-run-build-script": true
 }

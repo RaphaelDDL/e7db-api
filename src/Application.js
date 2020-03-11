@@ -44,7 +44,7 @@ serverShutdown();
 // log all requests to app
 app.use(function(req, res, next) {
 cLog('log', `${getDateNow()} :: ${req.ip} REQ: ${req.originalUrl} || REF: ${req.get('Referrer')}`);
-next();
+    next();
 });
 // v1 redirect handler for /api/
 V1(app);
