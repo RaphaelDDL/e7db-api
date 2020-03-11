@@ -25,7 +25,7 @@ export default asyncRoute(async (req, res, next) => {
 				{ $match: { _id } },
 				{
 					$lookup: {
-						from: `buff-${requestedLanguage}`,
+						from: `buffs-${requestedLanguage}`,
 						localField: 'buffs',
 						foreignField: '_id',
 						as: 'buffs',
@@ -33,7 +33,7 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{
 					$lookup: {
-						from: `buff-${requestedLanguage}`,
+						from: `buffs-${requestedLanguage}`,
 						localField: 'debuffs',
 						foreignField: '_id',
 						as: 'debuffs',
@@ -41,7 +41,7 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{
 					$lookup: {
-						from: `buff-${requestedLanguage}`,
+						from: `buffs-${requestedLanguage}`,
 						localField: 'common',
 						foreignField: '_id',
 						as: 'common',
@@ -72,7 +72,7 @@ export default asyncRoute(async (req, res, next) => {
 				// // converting buff/debuff/other into their data
 				// {
 				// 	$lookup: {
-				// 		from: `buff-${requestedLanguage}`,
+				// 		from: `buffs-${requestedLanguage}`,
 				// 		let: { ar: '$skills.buff' },
 				// 		pipeline: [
 				// 			{
