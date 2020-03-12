@@ -56,19 +56,19 @@ export default asyncRoute(async (req, res, next) => {
 				// 		as: 'buffs',
 				// 	},
 				// },
-				{
-					$lookup: {
-						from: `buffs-${requestedLanguage}`,
-						let: { el: '$skills.buff' },
-						pipeline: [
-							{ $match: { $expr: { $in: ['$_id', '$$el'] } } },
-							// {
-							//     $project: { loreDescription: 0, skillDescription: 0, stats: 0 },
-							// },
-						],
-						as: 'skills.buff.$[]',
-					},
-				},
+				// {
+				// 	$lookup: {
+				// 		from: `buffs-${requestedLanguage}`,
+				// 		let: { el: '$skills.buff' },
+				// 		pipeline: [
+				// 			{ $match: { $expr: { $in: ['$_id', '$$el'] } } },
+				// 			// {
+				// 			//     $project: { loreDescription: 0, skillDescription: 0, stats: 0 },
+				// 			// },
+				// 		],
+				// 		as: 'skills.buff.$[]',
+				// 	},
+				// },
 				// adding ex_equip data if available
 				{
 					$lookup: {
