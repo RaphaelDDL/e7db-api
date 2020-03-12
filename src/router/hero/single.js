@@ -48,6 +48,7 @@ export default asyncRoute(async (req, res, next) => {
 						as: 'common',
 					},
 				},
+				// converting zodiac_tree/skills enhancements into their data
 				{
 					$lookup: {
 						from: `materials-${requestedLanguage}`,
@@ -56,27 +57,14 @@ export default asyncRoute(async (req, res, next) => {
 						as: 'zodiac_costs_items',
 					},
 				},
-				// {
-				// 	$lookup: {
-				// 		from: `buffs-${requestedLanguage}`,
-				// 		localField: 'skills.buff',
-				// 		foreignField: '_id',
-				// 		as: 'buffs',
-				// 	},
-				// },
-				// {
-				// 	$lookup: {
-				// 		from: `buffs-${requestedLanguage}`,
-				// 		let: { el: '$skills.buff' },
-				// 		pipeline: [
-				// 			{ $match: { $expr: { $in: ['$_id', '$$el'] } } },
-				// 			// {
-				// 			//     $project: { loreDescription: 0, skillDescription: 0, stats: 0 },
-				// 			// },
-				// 		],
-				// 		as: 'skills.buff.$[]',
-				// 	},
-				// },
+				{
+					$lookup: {
+						from: `materials-${requestedLanguage}`,
+						localField: 'skills.enhancements.costs.item',
+						foreignField: 'identifier',
+						as: 'sk_enhancements_costs_items',
+					},
+				},
 				// adding ex_equip data if available
 				{
 					$lookup: {
