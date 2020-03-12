@@ -23,6 +23,7 @@ export default asyncRoute(async (req, res, next) => {
 		const heroDetail = await collection
 			.aggregate([
 				{ $match: { _id } },
+				// converting buff/debuff/other into their data
 				{
 					$lookup: {
 						from: `buffs-${requestedLanguage}`,
@@ -47,44 +48,15 @@ export default asyncRoute(async (req, res, next) => {
 						as: 'common',
 					},
 				},
-
 				// adding ex_equip data if available
-				// {
-				// 	$lookup: {
-				// 		from: `ex_equip-${requestedLanguage}`,
-				// 		let: { charId: '$id' },
-				// 		pipeline: [
-				// 			{
-				// 				$match: {
-				// 					$expr: {
-				// 						$cond: [
-				// 							{ $eq: [{ $unit: '$$charId' }, 'missing'] },
-				// 							{},
-				// 							{ $in: ['$id', '$$charId'] },
-				// 						],
-				// 					},
-				// 				},
-				// 			},
-				// 		],
-				// 	},
-				// },
-
-				// // converting buff/debuff/other into their data
-				// {
-				// 	$lookup: {
-				// 		from: `buffs-${requestedLanguage}`,
-				// 		let: { ar: '$skills.buff' },
-				// 		pipeline: [
-				// 			{
-				// 				$match: {
-				// 					$expr: {
-				// 						$cond: [{ $eq: [{ $type: '$$ar' }, 'missing'] }, {}, { $in: ['$_id', '$$ar'] }],
-				// 					},
-				// 				},
-				// 			},
-				// 		],
-				// 	},
-				// },
+				{
+					$lookup: {
+						from: `ex_equip-${requestedLanguage}`,
+						localField: 'id',
+						foreignField: 'unit',
+						as: 'ex_equip',
+					},
+				},
 			])
 			.toArray();
 
