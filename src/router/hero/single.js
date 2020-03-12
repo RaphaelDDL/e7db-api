@@ -66,7 +66,7 @@ export default asyncRoute(async (req, res, next) => {
 							//     $project: { loreDescription: 0, skillDescription: 0, stats: 0 },
 							// },
 						],
-						as: '$skills.$[]',
+						as: 'skills.buff.$[]',
 					},
 				},
 				// adding ex_equip data if available
