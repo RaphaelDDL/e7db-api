@@ -48,6 +48,27 @@ export default asyncRoute(async (req, res, next) => {
 						as: 'common',
 					},
 				},
+				// {
+				// 	$lookup: {
+				// 		from: `buffs-${requestedLanguage}`,
+				// 		localField: 'skills.buff',
+				// 		foreignField: '_id',
+				// 		as: 'buffs',
+				// 	},
+				// },
+				{
+					$lookup: {
+						from: `buffs-${requestedLanguage}`,
+						let: { el: '$skills.buff' },
+						pipeline: [
+							{ $match: { $expr: { $in: ['$_id', '$$el'] } } },
+							// {
+							//     $project: { loreDescription: 0, skillDescription: 0, stats: 0 },
+							// },
+						],
+						as: '$skills.$[]',
+					},
+				},
 				// adding ex_equip data if available
 				{
 					$lookup: {
