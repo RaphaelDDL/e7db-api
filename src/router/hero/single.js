@@ -48,6 +48,14 @@ export default asyncRoute(async (req, res, next) => {
 						as: 'common',
 					},
 				},
+				{
+					$lookup: {
+						from: `materials-${requestedLanguage}`,
+						localField: 'zodiac_tree.costs.item',
+						foreignField: 'identifier',
+						as: 'zodiac_costs_items',
+					},
+				},
 				// {
 				// 	$lookup: {
 				// 		from: `buffs-${requestedLanguage}`,
