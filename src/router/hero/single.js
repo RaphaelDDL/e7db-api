@@ -106,7 +106,6 @@ export default asyncRoute(async (req, res, next) => {
 						as: 'convertedSkillCostItems',
 					},
 				},
-
 				{
 					$group: {
 						_id: '$skills.enhancements._id',
@@ -123,7 +122,6 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{ $addFields: { 'root.skills.enhancements.costs': '$skEnhCosts' } },
 				{ $replaceRoot: { newRoot: '$root' } },
-
 				{
 					$group: {
 						_id: '$skills._id',
@@ -142,7 +140,6 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{ $addFields: { 'root.skills': '$skills' } },
 				{ $replaceRoot: { newRoot: '$root' } },
-
 				{ $project: { convertedSkillCostItems: 0 } },
 			])
 			.toArray();
