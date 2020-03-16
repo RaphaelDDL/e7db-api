@@ -91,7 +91,7 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{
 					$group: {
-						name: '$zodiac_tree.name',
+						_id: '$zodiac_tree.name',
 						root: {
 							$first: '$$ROOT',
 						},
