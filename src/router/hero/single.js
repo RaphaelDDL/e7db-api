@@ -65,84 +65,85 @@ export default asyncRoute(async (req, res, next) => {
 				// 		as: 'sk_enhancements_costs_items',
 				// 	},
 				// },
-				// adding ex_equip data if available
-				{
-					$lookup: {
-						from: `ex_equip-${requestedLanguage}`,
-						localField: 'id',
-						foreignField: 'unit',
-						as: 'ex_equip',
-					},
-				},
 
-				{
-					$unwind: '$zodiac_tree',
-				},
-				{
-					$unwind: '$zodiac_tree.costs',
-				},
-				{
-					$lookup: {
-						from: `materials-${requestedLanguage}`,
-						localField: 'zodiac_tree.costs.item',
-						foreignField: '_id',
-						as: 'zodiac_costs_items',
-					},
-				},
-				{
-					$group: {
-						_id: '$zodiac_tree.name',
-						root: {
-							$first: '$$ROOT',
-						},
-						items: {
-							$push: {
-								$mergeObjects: [
-									'$zodiac_tree.costs',
-									{
-										$arrayElemAt: ['$zodiac_costs_items', 0],
-									},
-								],
-							},
-						},
-					},
-				},
-				{
-					$addFields: {
-						'root.zodiac_tree.costs': '$items',
-					},
-				},
-				{
-					$replaceRoot: {
-						newRoot: '$root',
-					},
-				},
-				{
-					$group: {
-						_id: '$_id',
-						root: {
-							$first: '$$ROOT',
-						},
-						zodiac_tree: {
-							$push: '$costs',
-						},
-					},
-				},
-				{
-					$addFields: {
-						'root.zodiac_tree': '$zodiac_tree',
-					},
-				},
-				{
-					$replaceRoot: {
-						newRoot: '$root',
-					},
-				},
-				{
-					$project: {
-						zodiac_costs_items: 0,
-					},
-				},
+				// adding ex_equip data if available
+				// {
+				// 	$lookup: {
+				// 		from: `ex_equip-${requestedLanguage}`,
+				// 		localField: 'id',
+				// 		foreignField: 'unit',
+				// 		as: 'ex_equip',
+				// 	},
+				// },
+
+				// {
+				// 	$unwind: '$zodiac_tree',
+				// },
+				// {
+				// 	$unwind: '$zodiac_tree.costs',
+				// },
+				// {
+				// 	$lookup: {
+				// 		from: `materials-${requestedLanguage}`,
+				// 		localField: 'zodiac_tree.costs.item',
+				// 		foreignField: '_id',
+				// 		as: 'zodiac_costs_items',
+				// 	},
+				// },
+				// {
+				// 	$group: {
+				// 		_id: '$zodiac_tree._id',
+				// 		root: {
+				// 			$first: '$$ROOT',
+				// 		},
+				// 		items: {
+				// 			$push: {
+				// 				$mergeObjects: [
+				// 					'$zodiac_tree.costs',
+				// 					{
+				// 						$arrayElemAt: ['$zodiac_costs_items', 0],
+				// 					},
+				// 				],
+				// 			},
+				// 		},
+				// 	},
+				// },
+				// {
+				// 	$addFields: {
+				// 		'root.zodiac_tree.costs': '$items',
+				// 	},
+				// },
+				// {
+				// 	$replaceRoot: {
+				// 		newRoot: '$root',
+				// 	},
+				// },
+				// {
+				// 	$group: {
+				// 		_id: '$_id',
+				// 		root: {
+				// 			$first: '$$ROOT',
+				// 		},
+				// 		zodiac_tree: {
+				// 			$push: '$costs',
+				// 		},
+				// 	},
+				// },
+				// {
+				// 	$addFields: {
+				// 		'root.zodiac_tree': '$zodiac_tree',
+				// 	},
+				// },
+				// {
+				// 	$replaceRoot: {
+				// 		newRoot: '$root',
+				// 	},
+				// },
+				// {
+				// 	$project: {
+				// 		zodiac_costs_items: 0,
+				// 	},
+				// },
 			])
 			.toArray();
 
