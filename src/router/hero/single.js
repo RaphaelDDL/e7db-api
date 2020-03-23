@@ -83,6 +83,7 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{ $addFields: { 'root.zodiac_tree.costs': '$items' } },
 				{ $replaceRoot: { newRoot: '$root' } },
+				{ $sort: { 'zodiac_tree._id': 1 } },
 				{
 					$group: {
 						_id: '$_id',
@@ -122,6 +123,8 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{ $addFields: { 'root.skills.enhancements.costs': '$skEnhCosts' } },
 				{ $replaceRoot: { newRoot: '$root' } },
+				{ $sort: { 'skills.enhancements._id': 1 } },
+
 				{
 					$group: {
 						_id: '$skills._id',
@@ -131,6 +134,7 @@ export default asyncRoute(async (req, res, next) => {
 				},
 				{ $addFields: { 'root.skills.enhancements': '$skEnh' } },
 				{ $replaceRoot: { newRoot: '$root' } },
+				{ $sort: { 'skills._id': 1 } },
 				{
 					$group: {
 						_id: '$_id',
