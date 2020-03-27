@@ -5,6 +5,7 @@ import {
 	mountApiResponse,
 	getCurrentLanguage,
 	nodeTimer,
+	preCalcStatus,
 	asyncRoute,
 } from '../../utils/Utility';
 
@@ -149,6 +150,7 @@ export default asyncRoute(async (req, res, next) => {
 			.toArray();
 
 		if (heroDetail && heroDetail.length) {
+			preCalcStatus(heroDetail[0]);
 			nodeTimer(TIME_START);
 			return mountApiResponse({}, res, null, heroDetail);
 		}
