@@ -50,7 +50,7 @@ export default asyncRoute(async (req, res, next) => {
 							role: 1,
 							zodiac: 1,
 						},
-						icon: 1,
+						assets: 1,
 					},
 				},
 			])

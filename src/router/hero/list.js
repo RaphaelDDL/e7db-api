@@ -35,6 +35,7 @@ export default asyncRoute(async (req, res, next) => {
 						buffs: 1,
 						debuffs: 1,
 						common: 1,
+						assets: 1,
 					},
 				},
 			])

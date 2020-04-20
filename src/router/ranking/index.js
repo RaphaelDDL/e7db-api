@@ -43,6 +43,7 @@ export default asyncRoute(async (req, res, next) => {
 						'team.rarity': 1,
 						'team.attribute': 1,
 						'team.role': 1,
+						'team.assets': 1,
 					},
 				},
 			])
