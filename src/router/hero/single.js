@@ -23,7 +23,13 @@ export default asyncRoute(async (req, res, next) => {
 
 		const heroDetail = await collection
 			.aggregate([
-				{ $match: { _id } },
+				// { $match: { _id } },
+
+				// _id (name-of-hero) or id (c####) or name (Name of Hero)
+				{
+					$or: [{ $match: { _id } }, { $match: { id: _id } }, { $match: { name: _id } }],
+				},
+				{ $limit: 1 },
 				// converting buff/debuff/other into their data
 				{
 					$lookup: {
