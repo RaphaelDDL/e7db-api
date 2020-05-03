@@ -27,7 +27,7 @@ export default asyncRoute(async (req, res, next) => {
 
 				// _id (name-of-hero) or id (c####) or name (Name of Hero)
 				{
-					$or: [{ $match: { _id } }, { $match: { id: _id } }, { $match: { name: _id } }],
+					$or: [{ _id: _id }, { id: _id }, { name: _id }],
 				},
 				{ $limit: 1 },
 				// converting buff/debuff/other into their data
