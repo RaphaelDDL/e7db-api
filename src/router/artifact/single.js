@@ -26,7 +26,7 @@ export default asyncRoute(async (req, res, next) => {
 				// _id (name-of-artifact) or id (e####)
                 {
 					$match: {
-						$or: [{ _id }, { id: _id }],
+						$or: [{ _id }, { identifier: _id }],
 					},
 				},
 				{ $limit: 1 },
