@@ -20,9 +20,20 @@ export default asyncRoute(async (req, res, next) => {
 			throw new Error('!collection || !requestedLanguage || !_id');
 		}
 
-		const artifactDetail = await collection.aggregate([{ $match: { _id } }, { $limit: 1 }]).toArray();
+		const artifactDetail = await collection
+			.aggregate([
+                /* { $match: { _id } }, */
+				// _id (name-of-artifact) or id (e####)
+                {
+					$match: {
+						$or: [{ _id }, { id: _id }],
+					},
+				},
+				{ $limit: 1 },
+			])
+			.toArray();
 
-		if (artifactDetail && artifactDetail.length) {
+		if (artifactDetail?.length) {
 			nodeTimer(TIME_START);
 			return mountApiResponse({}, res, null, artifactDetail);
 		}

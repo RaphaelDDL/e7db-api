@@ -25,10 +25,10 @@ export default asyncRoute(async (req, res, next) => {
 			.aggregate([
 				// { $match: { _id } },
 
-				// _id (name-of-hero) or id (c####) or name (Name of Hero)
+				// _id (name-of-hero) or id (c####)
 				{
 					$match: {
-						$or: [{ _id: _id }, { id: _id }, { name: _id }],
+						$or: [{ _id }, { id: _id }],
 					},
 				},
 				{ $limit: 1 },
@@ -157,7 +157,7 @@ export default asyncRoute(async (req, res, next) => {
 			])
 			.toArray();
 
-		if (heroDetail && heroDetail.length) {
+		if (heroDetail?.length) {
 			preCalcStatus(heroDetail[0]);
 			nodeTimer(TIME_START);
 			return mountApiResponse({}, res, null, heroDetail);
