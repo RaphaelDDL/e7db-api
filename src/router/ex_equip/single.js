@@ -26,8 +26,21 @@ export default asyncRoute(async (req, res, next) => {
 				{
 					$lookup: {
 						from: `hero-${requestedLanguage}`,
-						localField: 'unit',
-						foreignField: 'id',
+						let: { unit: '$unit' },
+						pipeline: [
+							{ $match: { $expr: { $eq: ['$id', '$$unit'] } } },
+							{
+								$project: {
+									_id: 1,
+									id: 1,
+									name: 1,
+									rarity: 1,
+									attribute: 1,
+									role: 1,
+									zodiac: 1,
+								},
+							},
+						],
 						as: 'unit',
 					},
 				},
@@ -35,26 +48,6 @@ export default asyncRoute(async (req, res, next) => {
 					$addFields: {
 						unit: {
 							$arrayElemAt: ['$unit', 0],
-						},
-					},
-				},
-				{
-					$project: {
-						_id: 1,
-						name: 1,
-						description: 1,
-						icon: 1,
-						role: 1,
-						rarity: 1,
-						stat: 1,
-						unit: {
-							_id: 1,
-							id: 1,
-							name: 1,
-							rarity: 1,
-							attribute: 1,
-							role: 1,
-							zodiac: 1,
 						},
 					},
 				},
