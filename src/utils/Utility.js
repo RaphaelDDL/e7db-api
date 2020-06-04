@@ -53,8 +53,10 @@ export const getCurrentLanguage = (req) => {
 		return 'en';
 	}
 	switch (requestedLanguage) {
-		case 'cn':
+		case 'tw':
 			requestedLanguage = 'zht';
+		case 'cn':
+			requestedLanguage = 'zhs';
 			break;
 		case 'ko':
 			requestedLanguage = 'kr';
