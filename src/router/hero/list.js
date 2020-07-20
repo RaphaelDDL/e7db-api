@@ -23,6 +23,7 @@ export default asyncRoute(async (req, res, next) => {
 			.aggregate([
 				{
 					$project: {
+						id: 1,
 						_id: 1,
 						name: 1,
 						moonlight: 1,
