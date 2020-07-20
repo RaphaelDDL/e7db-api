@@ -1,6 +1,7 @@
 import express from 'express';
 import device from 'express-device';
 import helmet from 'helmet';
+import nocache from 'nocache';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { MESSAGES } from '../utils/Constants';
@@ -17,7 +18,7 @@ export default class Server {
 		this.app.use(bodyParser.json());
 		this.app.use(helmet());
 		this.app.use(helmet.permittedCrossDomainPolicies());
-		this.app.use(helmet.noCache());
+		this.app.use(nocache());
 		this.app.use(cors());
 		this.app.options('*', cors());
 		this.app.use(
