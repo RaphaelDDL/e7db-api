@@ -37,7 +37,7 @@ export default asyncRoute(async (req, res, next) => {
 					$lookup: {
 						from: `buffs-${requestedLanguage}`,
 						localField: 'buffs',
-						foreignField: '_id',
+						foreignField: 'id',
 						as: 'buffs',
 					},
 				},
@@ -45,7 +45,7 @@ export default asyncRoute(async (req, res, next) => {
 					$lookup: {
 						from: `buffs-${requestedLanguage}`,
 						localField: 'debuffs',
-						foreignField: '_id',
+						foreignField: 'id',
 						as: 'debuffs',
 					},
 				},
@@ -53,7 +53,7 @@ export default asyncRoute(async (req, res, next) => {
 					$lookup: {
 						from: `buffs-${requestedLanguage}`,
 						localField: 'common',
-						foreignField: '_id',
+						foreignField: 'id',
 						as: 'common',
 					},
 				},
