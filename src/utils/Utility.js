@@ -32,13 +32,10 @@ export const mountApiResponse = (queryCursor, res, err, dbResults = []) => {
 		return mountApiErrorResponse(res, MESSAGES.db.dbConnectionQuery, err);
 	}
 
-	return res
-		.status(200)
-		.set(HEADERS.json)
-		.json({
-			results: dbResults,
-			meta: getResponseMeta(),
-		});
+	return res.status(200).set(HEADERS.json).json({
+		results: dbResults,
+		meta: getResponseMeta(),
+	});
 };
 
 //* ------------------------
@@ -48,26 +45,22 @@ export const getCurrentLanguage = (req) => {
 	let { lang: requestedLanguage = req.get('x-e7db-lang') || 'en' } = req.query;
 	if (
 		requestedLanguage === 'en' ||
-		!['es', 'pt', 'fr', 'ja', 'jp', 'kr', 'ko', 'de', 'zht','tw', 'cn'].includes(requestedLanguage)
+		!['es', 'pt', 'fr', 'ja', 'jp', 'kr', 'ko', 'de', 'zht', 'tw', 'zhs', 'cn'].includes(requestedLanguage)
 	) {
 		return 'en';
 	}
 	switch (requestedLanguage) {
 		case 'tw':
-			requestedLanguage = 'zht';
+			return 'zht';
 		case 'cn':
-			requestedLanguage = 'zhs';
-			break;
+			return 'zhs';
 		case 'ko':
-			requestedLanguage = 'kr';
-			break;
+			return 'kr';
 		case 'jp':
-			requestedLanguage = 'ja';
-			break;
+			return 'ja';
 		default:
-			break;
+			return requestedLanguage;
 	}
-	return requestedLanguage;
 };
 
 //* ------------------------
