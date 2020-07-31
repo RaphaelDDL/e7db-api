@@ -36,6 +36,7 @@ export default asyncRoute(async (req, res, next) => {
 						league: 1,
 						rank: 1,
 						border: 1,
+						ts: 1,
 						'team._id': 1,
 						'team.id': 1,
 						'team.name': 1,
