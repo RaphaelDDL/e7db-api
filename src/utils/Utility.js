@@ -45,7 +45,7 @@ export const getCurrentLanguage = (req) => {
 	let { lang: requestedLanguage = req.get('x-e7db-lang') || 'en' } = req.query;
 	if (
 		requestedLanguage === 'en' ||
-		!['es', 'pt', 'fr', 'ja', 'jp', 'kr', 'ko', 'de', 'zht', 'tw', 'zhs', 'cn'].includes(requestedLanguage)
+		!['es', 'pt', 'fr', 'ja', 'jp', 'kr', 'ko', 'de', 'zht', 'tw', 'zhs', 'cn', 'th'].includes(requestedLanguage)
 	) {
 		return 'en';
 	}
