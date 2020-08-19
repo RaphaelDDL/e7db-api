@@ -49,6 +49,10 @@ export default asyncRoute(async (req, res, next) => {
 				},
 			])
 			.sort({
+				ts: -1,
+			})
+			.limit(100)
+			.sort({
 				rank: 1,
 			})
 			.toArray();
