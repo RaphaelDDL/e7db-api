@@ -19,8 +19,13 @@ export default asyncRoute(async (req, res, next) => {
 			throw new Error('!collection || !requestedLanguage');
 		}
 
+		const [{ ts: latestTimestamp }] = await collection.find().sort({ ts: -1 }).limit(1).toArray();
+
 		const rankList = await collection
 			.aggregate([
+				{
+					$match: { ts: latestTimestamp },
+				},
 				{
 					$lookup: {
 						from: `hero-${requestedLanguage}`,
@@ -48,10 +53,6 @@ export default asyncRoute(async (req, res, next) => {
 					},
 				},
 			])
-			.sort({
-				ts: -1,
-			})
-			.limit(100)
 			.sort({
 				rank: 1,
 			})
