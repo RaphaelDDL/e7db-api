@@ -1,7 +1,6 @@
 import { MongoClient } from 'mongodb';
 import { DB } from '../utils/Constants';
 
-// https://medium.com/@naumanzafarchaudhry/using-mongodb-on-heroku-without-verifying-your-account-9053a8c42e3c
 class Database {
 	constructor() {
 		this.mongoClient = {};
@@ -31,7 +30,7 @@ class Database {
 	connect() {
 		return MongoClient.connect(DB.url, {
 			useNewUrlParser: true,
-			useUnifiedTopology: false,
+			useUnifiedTopology: true,
 			// autoReconnect: true,
 			// reconnectTries: 100,
 			// reconnectInterval: 5000, //ms
