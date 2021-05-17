@@ -31,7 +31,7 @@ class Database {
 	connect() {
 		return MongoClient.connect(DB.url, {
 			useNewUrlParser: true,
-			useUnifiedTopology: true,
+			useUnifiedTopology: false,
 			// autoReconnect: true,
 			// reconnectTries: 100,
 			// reconnectInterval: 5000, //ms
