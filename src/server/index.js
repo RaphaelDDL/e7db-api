@@ -3,6 +3,7 @@ import device from 'express-device';
 import helmet from 'helmet';
 import nocache from 'nocache';
 import cors from 'cors';
+// import cron from 'node-cron';
 import bodyParser from 'body-parser';
 import { MESSAGES } from '../utils/Constants';
 import { getDateNow, cLog } from '../utils/Utility';
@@ -37,19 +38,22 @@ export default class Server {
 			res.sendStatus(200);
 		});
 
-		this.start = () => {
+		this.start = async () => {
 			if (process?.env?.DB_CONNECT === 'false') {
 				return this.serverStart();
 			}
-			Database.connect()
-				.then(() => {
-					this.serverStart();
-				})
-				.catch((error) => {
-					cLog('error', MESSAGES.db.dbConnectionServer);
-					cLog('error', error.stack);
-					process.exit(1);
-				});
+			try {
+				await Database.connect();
+				// await Database.processHashes();
+				// cron.schedule('* 12 * * *', () => {
+				// 	Database.processHashes();
+				// });
+				return this.serverStart();
+			} catch (error) {
+				cLog('error', MESSAGES.db.dbConnectionServer);
+				cLog('error', error.stack);
+				process.exit(1);
+			}
 		};
 	}
 

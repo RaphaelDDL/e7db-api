@@ -1,5 +1,6 @@
 import dateFormat from 'dateformat';
 import { VERSION, MESSAGES, HEADERS } from './Constants';
+import Database from '../db';
 
 //* ------------------------
 // Section: Routes Related
@@ -74,6 +75,7 @@ export const getResponseMeta = () => {
 	return {
 		requestDate: getDateNow(),
 		apiVersion: VERSION,
+		hash: Database.hash,
 	};
 };
 
